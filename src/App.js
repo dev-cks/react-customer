@@ -1,21 +1,32 @@
+import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
-import React from 'react';
-import { ReactDOM } from 'react-dom';
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
-import 'reactjs-popup/dist/index.css';
-import UserList from './component/home/UserList';
-import UserDetail from './component/detail/UserDetail';
-function App() {
-  return ReactDOM.render(
-    <Router>
-      <div>
-        <Route exact path="/">
-          <UserList />
-        </Route>
-        
+import Customers from './Customers'
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import CustomerDetails from './CustomerDetails';
+
+
+class App extends Component {
+  render() {
+    console.log("Host URL"+process.env.PUBLIC_URL);
+    return (
+
+      <Router basename={process.env.PUBLIC_URL}>
+        <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">React</h1>
+        </header>
+          <Switch>
+                <Route exact path= "/" render={() => (
+                  <Redirect to="/customerlist"/>
+                )}/>
+                 <Route exact path='/customerlist' component={Customers} />
+                 <Route exact path='/customerdetail/:id' component={CustomerDetails} />
+          </Switch>
       </div>
     </Router>
-  );
+    );
+  }
 }
 
 export default App;
